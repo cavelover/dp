@@ -3,37 +3,82 @@
 <html lang="ja">
 
     <head>
-        <meta charset="utf-8">
-        <title>concentration inequalities</title>
-        <meta name="description" content="ディスクリプションを入力">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="style.css">
-        <!-- [if lt IE 9] -->
-        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
-        <!-- [endif] -->
-        <script src="main.js"></script>
-       
-        <script type="text/javascript"
-         src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-       　</script>
-        <script type="text/x-mathjax-config">
-            MathJax.Hub.Config({
-            TeX: { equationNumbers: { autoNumber: "AMS" }},
-            tex2jax: {
-            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-            processEscapes: true
-            },
-            "HTML-CSS": { matchFontHeight: false },
-            displayAlign: "left",
-            displayIndent: "2em"
-            });
-        </script>
+        <link rel="stylesheet" href="../../css/style.css">
+        <script type="text/javascript" src="../../js/template.js"></script>
+        <script type="text/javascript">head("確率不等式");</script>
     </head>
 
     <body>
+        <a href="http://cs229.stanford.edu/extra-notes/hoeffding.pdf">スタンフォード大学の講義資料</a><br>
+        差分プライバシの証明に度々出てくるconcentration inequalitiesを簡単にまとめる。<br>
+        concentration inequalityは確率変数がなんらかの値（期待値が多い）からどれくらい離れているかを記述するための不等式を指す。日本語では確率不等式になるのかな？<br>
+        差分プライバシではその中でも"sum of independent variable"に分類されるものが多く使われると思う。
 
-        aa
+
+        <h2>Markov's inequality</h2>
+        <p>
+            確率不等式界の主役。その癖証明は一行で終わる。
+        </p>
+
+        <div class="box">
+            <span class="box-title">Markov's inequality</span>
+            <p>
+                $Z\geq 0$を確率変数とする。この時、
+                $$\forall t\geq 0, \Pr{(Z\geq t)}\leq \frac{\mathbb{E}[Z]}{t}$$
+            </p>
+        </div>
+        <p>
+            この証明では$\mathbb{1}\{Z\geq t\}$を考えることがキー。
+        </p>
+        <b>証明</b>
+        <p>
+            $\Pr[Z\geq t]=\mathbb{E}[\mathbb{1}\{Z\geq t\}]$であり、その定義より明らかに$Z< t$の時、$\mathbb{1}\{Z\geq t\}= 0$で$Z\geq t$の時、$\mathbb{1}\{Z\geq t\}=1\leq \frac{Z}{t}$。<br>
+            つまり、常に$\mathbb{1}\{Z\geq t\}\leq \frac{Z}{t}$。
+            両辺$Z$で平均をとると、命題が得られる。
+        </p>
+
+        <h2>Chebyshev's inequality</h2>
+        <p>
+            マルコフ不等式の変形ではあるが、平均ではなく分散に着目した不等式。
+        </p>
+        <div class="box">
+            <span class="box-title">Chebyshev's inequality</span>
+            <p>
+                $Z$を$Var(Z)<\infty$な確率変数とする。この時、$t\geq 0$に対して
+                $$\Pr{(Z\geq\mathbb{E}[Z]+t\ or\ Z\leq\mathbb{E}[Z]-t)}\leq\frac{Var(Z)}{t^2}$$
+            </p>
+        </div>
+        <p>
+            証明はマルコフ不等式に依る。
+        </p>
+        <b>証明</b>
+        <p>
+            $\Pr{(Z\geq\mathbb{E}[Z]+t\ or\ Z\leq\mathbb{E}[Z]-t)}=\Pr((Z-\mathbb{E}[Z])^2\geq t^2)$であるから、これにマルコフ不等式を適用すれば命題が得られる。
+        </p>
+
+        <h2>Chernoff bounds</h2>
+        <p>
+            ここまでは、分散が有限であるという条件ので評価していた。ここではより厳しい制約を与えることで、もっとタイトな不等式を得る。
+            $Z$のモーメント母関数は以下のように与えられる。
+        </p>
+        <p>
+            チェルノフ上界のイメージは$Z$のモーメント母関数にマルコフ不等式を適用したもの。このモーメント母関数を利用することの良さは、確率変数の和が綺麗に計算できること。
+        </p>
+        $$M_Z(\lambda):=\mathbb{E}[\exp{(\lambda Z)}]$$
+
+        <h2>モーメント母関数</h2>
+        <p>
+            ここではなぜモーメント母関数を考えると良いのかを例を使って説明する。
+        </p>
+
+        <h2>Hoeffding's inequality</h2>
+        Balleのshufflingに出てくる
+
+
+        <h2>Benett's inequality</h2>
+        Balleのshufflingに出てくる
+
+        Azuma, jensen(Kairouzのadvanecd composition), hoeffding (Balleのshuffling)
 
     </body>
 
